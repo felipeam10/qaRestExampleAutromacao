@@ -1,0 +1,37 @@
+[
+  {
+    "codigo": 1,
+    "nome": "matrix",
+    "sinopse": "sinopse1",
+    "faixaEtaria": "14",
+    "genero": "acao"
+  },
+  {
+    "codigo": 2,
+    "nome": "madMax",
+    "sinopse": "sinopse2",
+    "faixaEtaria": "16",
+    "genero": "acao"
+  },
+  {
+    "codigo": 3,
+    "nome": "reiLeao",
+    "sinopse": "sinopse3",
+    "faixaEtaria": "10",
+    "genero": "infantil"
+  },
+  {
+    "codigo": 4,
+    "nome": "osTrapalhoes",
+    "sinopse": "sinopse4",
+    "faixaEtaria": "05",
+    "genero": "comedia"
+  },
+  {
+    "codigo": 5,
+    "nome": "toyStory",
+    "sinopse": "sinopse5",
+    "faixaEtaria": "04",
+    "genero": "infantil"
+  }
+]
