@@ -16,3 +16,8 @@ Feature: Pegar Status do servidor
   Scenario: Criar um filme com sucesso
     When faco uma requisicao para criar um filme
     Then valido se o filme foi criado
+
+  @editar
+  Scenario: Editar um filme com sucesso
+    When faco uma requisicao para editar um filme
+    Then valido se o filme foi editado

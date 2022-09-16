@@ -23,6 +23,14 @@ public class FilmeStepDefinition {
 
     ValidatableResponse response;
 
+    //Coloquei para gerar apenas o código do filme aleatório
+    Faker teste = new Faker();
+    Integer randonNumber = teste.number().numberBetween(6,99);
+    String nome = teste.name().firstName();
+    String sinopse = teste.name().lastName();
+    String faixaEtaria = teste.dog().age();
+    String genero = teste.animal().name();
+
     @When("faco uma requisicao para a url de filme")
     public void faco_uma_requisicao_para_a_url_de_filme() {
         initRequest();
@@ -86,7 +94,7 @@ public class FilmeStepDefinition {
 
     @Then("valido se o filme foi deletado")
     public void valido_se_o_filme_foi_deletado() {
-        response.statusCode(404);
+        response.statusCode(200);
     }
 
     @When("faco uma requisicao para criar um filme")
@@ -97,11 +105,7 @@ public class FilmeStepDefinition {
         headers.put("Content-Type", "application/json");
         setHeaders(headers);
 
-        //Coloquei para gerar apenas o código do filme aleatório
-        Faker teste = new Faker();
-        Integer randonNumber = teste.number().numberBetween(6,99);
-
-        FilmeModel bodyObjeto = new FilmeModel(randonNumber, "topGun", "sinopse6", "16","acao");
+        FilmeModel bodyObjeto = new FilmeModel(randonNumber, nome, sinopse, faixaEtaria, genero);
         System.out.println(bodyObjeto.toString());
         setBody(bodyObjeto.toString());
         postRequest();
@@ -110,7 +114,44 @@ public class FilmeStepDefinition {
 
     @Then("valido se o filme foi criado")
     public void valido_se_o_filme_foi_criado() {
+        assertEquals(randonNumber, response.extract().path("codigo"));
+        assertEquals(nome, response.extract().path("nome"));
+        assertEquals(sinopse, response.extract().path("sinopse"));
+        assertEquals(faixaEtaria, response.extract().path("faixaEtaria"));
+        assertEquals(genero, response.extract().path("genero"));
+        response = getResponse().then().log().all();
+    }
 
+    @When("faco uma requisicao para editar um filme")
+    public void faco_uma_requisicao_para_editar_um_filme() {
+        initRequest();
+        setPath(BaseUri.BASE_URI.getUri(), ApiPath.EDITAR_FILME.getPath());
+
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        setHeaders(headers);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("codigo", "1");
+        setPathParams(params);
+
+        FilmeModel bodyObjeto = new FilmeModel(1, nome, sinopse, faixaEtaria, genero);
+//        System.out.println(bodyObjeto.toString());
+        setBody(bodyObjeto.toString());
+        putRequest();
+
+        response = getResponse().then().log().all();
+
+    }
+
+    @Then("valido se o filme foi editado")
+    public void valido_se_o_filme_foi_editado() {
+        assertEquals(Integer.valueOf(1), response.extract().path("codigo"));
+        assertEquals(nome, response.extract().path("nome"));
+        assertEquals(sinopse, response.extract().path("sinopse"));
+        assertEquals(faixaEtaria, response.extract().path("faixaEtaria"));
+        assertEquals(genero, response.extract().path("genero"));
+        response = getResponse().then().log().all();
     }
 
 }

@@ -41,6 +41,10 @@ public class RestContext {
         response = request.delete();
     }
 
+    public static void putRequest(){
+        response = request.put();
+    }
+
     public static void setPathParams(Map<String, String> params){
         request.pathParams(params);
     }
